@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -1110,7 +1110,7 @@ public class Program
                 // 判断是否要额外导出为json文件
                 if (AppValues.ExportJsonTableNames.Contains(tableName))
                 {
-                    TableExportToJsonHelper.ExportTableToJson(tableInfo, out errorString);
+                    TableExportToJsonHelper.ExportTableToJson(tableName, tableInfo, out errorString);
                     if (errorString != null)
                         Utils.LogErrorAndExit(errorString);
                     else
