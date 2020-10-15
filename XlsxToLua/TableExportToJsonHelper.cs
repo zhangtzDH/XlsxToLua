@@ -1,4 +1,4 @@
-﻿using LitJson;
+using LitJson;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,16 +8,21 @@ public class TableExportToJsonHelper
     // 用于缩进json的字符串
     private static string _JSON_INDENTATION_STRING = "\t";
 
-    public static bool ExportTableToJson(TableInfo tableInfo, out string errorString)
+    public static bool ExportTableToJson(string tableName, TableInfo tableInfo, out string errorString)
     {
         StringBuilder content = new StringBuilder();
 
         // 若生成为各行数据对应的json object包含在一个json array的形式
         if (AppValues.ExportJsonIsExportJsonArrayFormat == true)
-        {
+        {    
+
+            content.Append("{");
+            content.Append("\"");
+            content.Append(tableName);
+            content.Append("\":");
             // 生成json字符串开头，每行数据为一个json object，作为整张表json array的元素
             content.Append("[");
-
+            
             // 逐行读取表格内容生成json
             List<FieldInfo> allField = tableInfo.GetAllClientFieldInfo();
             int dataCount = tableInfo.GetKeyColumnFieldInfo().Data.Count;
@@ -52,6 +57,7 @@ public class TableExportToJsonHelper
                 content.Remove(content.Length - 1, 1);
             // 生成json字符串结尾
             content.Append("]");
+            content.Append("}");
         }
         else
         {
